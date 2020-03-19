@@ -5,6 +5,7 @@ var router = express.Router();
 router.get('/login',function(req,res,_next){
   console.log(1)
   console.log(2)
+  console.log(3)
   const {userName,password} = req.query
   console.log(req.query)
   let userInfo={
