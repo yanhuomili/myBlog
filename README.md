@@ -26,5 +26,10 @@
 ## 封装 controller,业务代码放 controller 里面
 
 ## 登录实现,账户密码加密
+1.登录完成后将用户信息放到redis中去，需要校验的时候就从req.session里面去取出来，如果登录过期了，session里面的数据就会被清除，用户需要重新登陆
+1.安装express-session
+2.session redis  将session存在redis内存中
+3.登录验证中间件校验登录
+
 
 ## 防攻击处理 xxs

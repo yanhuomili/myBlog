@@ -6,7 +6,13 @@ const addArticle = async function(body){
   let result = await queryHandler(sql)
   return result
 }
+const getArticleList = async function(body){
+  let sql = `select * from blogs`
+  let result = await queryHandler(sql)
+  return result
+}
 
 module.exports = {
-  addArticle
+  addArticle,
+  getArticleList
 }
