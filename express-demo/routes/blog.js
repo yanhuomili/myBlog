@@ -1,14 +1,19 @@
 var express = require('express');
 var router = express.Router();
+const {SuccessModel,ErrorModel} = require('../model/httpResModel')
+const {addArticle} = require('../controller/blog')
+
 
 /* blog */
-router.get('/list',function(req,res,next){
-  let list=[
-    {title:'title',id:1,text:'的说法是理发店设计费第三方文件人水电费水电费'},
-    {title:'title',id:2,text:'的说法是理发店设计费第三方文件人水电费水电费'},
-    {title:'title',id:3,text:'的说法是理发店设计费第三方文件人水电费水电费'},
-  ]
-  res.send(JSON.stringify(list))
+/* 路由模块只处理返回结果，参数的解析以及数据的组装放到controller层面去 */
+router.get('/add',async function(req,res){
+  const result =await addArticle(req.query)
+  if(!result){
+    res.json(new ErrorModel('新增失败'))
+    return new ErrorModel('新增失败')
+  }
+  res.json(new SuccessModel(result))
+  return new SuccessModel(result)
 })
 
 module.exports = router;

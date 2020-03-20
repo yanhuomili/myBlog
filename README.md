@@ -13,3 +13,18 @@
 1.我们执行增删改查 sql 语句的时候遇到需要操作 varchar 类型的字段时，都需要在包上单引或者双引号,如一下 sql 语句，因为 title 是 varchar 类型，所以它的值需要用引号包住，否则操作数据库会失败
 
 > let sql = `update blogs set title = '更新标题${id}' where id = ${id}`
+
+# 整体项目模型解析
+
+1.www.js createServer 属于项目最底层的封装
+2.app.js 是系统级别的设置
+3.router 是路由管理层面，只管路由
+4.controller 是逻辑层，只关系数据的处理
+
+## 封装返回数据模型
+
+## 封装 controller,业务代码放 controller 里面
+
+## 登录实现,账户密码加密
+
+## 防攻击处理 xxs
