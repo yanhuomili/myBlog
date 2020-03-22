@@ -4,8 +4,9 @@ const {login} = require('../controller/user')
 const {SuccessModel,ErrorModel} = require('../model/httpResModel')
 
 /* GET user listing. */
-router.get('/login',async function(req,res,_next){
-  const {username,password} = req.query
+router.post('/login',async function(req,res,_next){
+  console.log(req.body,'req.body')
+  const {username,password} = req.body
   const result = await login(username,password)
   if(result&&result[0].username){
     /* 登录之后把用户信息放到session里面 */

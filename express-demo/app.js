@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require('express-session')
-const {redisClient,RedisStore} = require('./mysql/redis')
+// const {redisClient,RedisStore} = require('./mysql/redis')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -23,9 +23,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 /* redis客户端 */
-const sessionStore = new RedisStore({
-  client:redisClient
-})
+// const sessionStore = new RedisStore({
+//   client:redisClient
+// })
 app.use(session({
   secret:'Edfd!#145f',
   cookie:{
@@ -34,7 +34,7 @@ app.use(session({
     maxAge:24*60*60*1000
   },
   /* 若没配置store,session是存在内存中，配置了store，session存在redis中 */
-  store:sessionStore 
+  // store:sessionStore 
 }))
 app.use(express.static(path.join(__dirname, 'public')));
 
