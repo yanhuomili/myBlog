@@ -1,21 +1,21 @@
 <template>
   <div class="top-tip">
     <div class="tag-list">
-      <el-tabs v-model="editableTabsValue"
+      <el-tabs style="width:100%" v-model="editableTabsValue"
                type="card"
                closable
                @tab-remove="removeTab">
-        <el-tab-pane v-for="item in editableTabs"
-                    :key="item.name"
+        <el-tab-pane v-for="(item, index) in editableTabs"
+                    :key="index"
                     :label="item.title"
                     :name="item.name">
         </el-tab-pane>
       </el-tabs>
     </div>
-    <!-- <el-button size="small"
+    <el-button size="small"
                @click="addTab(editableTabsValue)">
       add tab
-    </el-button> -->
+    </el-button>
   </div>
 </template>
 
@@ -34,9 +34,28 @@ export default class Index extends Vue {
       title: "Tab 2",
       name: "2",
       content: "Tab 2 content"
+    },
+    {
+      title: "Tab 3",
+      name: "3",
+      content: "Tab 3 content"
+    },
+    {
+      title: "Tab 4",
+      name: "4",
+      content: "Tab 4 content"
     }
-  ];
+  ]
   tabIndex: any = 2;
+  addTab() {
+    const newTabName = ++this.tabIndex + ''
+    this.editableTabs.push({
+      title: 'New Tab',
+      name: newTabName,
+      content: 'New Tab content'
+    });
+    this.editableTabsValue = newTabName;
+  }
   removeTab(targetName: string) {
     const tabs = this.editableTabs
     let activeName = this.editableTabsValue
@@ -74,9 +93,10 @@ export default class Index extends Vue {
     ::v-deep .el-tabs__header{
       margin-bottom: 0;
     }
-    .tab-item{
-      padding: 0 20px;
+    ::v-deep .el-tabs--card>.el-tabs__header .el-tabs__item{
+      border-bottom: 1px solid #E4E7ED;
     }
+    
   }
 }
 </style>
