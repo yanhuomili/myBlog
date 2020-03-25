@@ -1,14 +1,14 @@
 <template>
   <div class="top-tip">
     <div class="tag-list">
-      <el-tabs style="width:100%" v-model="editableTabsValue"
+      <el-tabs style="width:100%" v-model="getMenuActiveIndex"
                type="card"
                closable
                @tab-remove="removeTab">
-        <el-tab-pane v-for="(item, index) in editableTabs"
+        <el-tab-pane v-for="(item, index) in getTabList"
                     :key="index"
-                    :label="item.title"
-                    :name="item.name">
+                    :label="item.label"
+                    :name="item.id + ''">
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -21,9 +21,32 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import {namespace} from 'vuex-class'
+const menus = namespace('menus')
 @Component
-export default class Index extends Vue {
-  editableTabsValue = "2"
+export default class NavBar extends Vue {
+  @menus.Getter('getTabList') getTabList
+  @menus.Getter('getMenuActiveIndex') getMenuActiveIndex
+  @menus.Getter('getMenuList') getMenuList
+  getCurrentMenu(index, menuList){
+    let tab = {}
+    this.getMenuList.forEach(element => {
+      if(element.id == this.getMenuActiveIndex){
+        tab = element
+        return tab
+      }
+    })
+    console.log('tabtabtabtab')
+    return tab
+  }
+  created() {
+    console.log('-----------------------------')
+    console.log(this.getTabList,'getTabList')
+    console.log(this.getMenuActiveIndex,'getMenuActiveIndex')
+    console.log(this.getMenuList,'getMenuList')
+    const tab = this.getCurrentMenu(this.getMenuActiveIndex, this.getMenuList)
+    this.editableTabsValue = tab.name
+  }
   editableTabs: Array<any> = [
     {
       title: "Tab 1",

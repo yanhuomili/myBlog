@@ -1,16 +1,6 @@
 <template>
   <div class="container">
-    <ul>
-      <li style="padding: 100px 50px;" v-for="item in 20" :key="item">{{item}}dssd对方说的啥地方地方放松的放松</li>
-      <li>dssd对方说的啥地方地方放松的放松</li>
-      <li>dssd对方说的啥地方地方放松的放松</li>
-      <li>dssd对方说的啥地方地方放松的放松</li>
-      <li>dssd对方说的啥地方地方放松的放松</li>
-      <li>dssd对方说的啥地方地方放松的放松</li>
-      <li>dssd对方说的啥地方地方放松的放松</li>
-    </ul>
-    
-
+    <router-view></router-view>
   </div>
 </template>
 
@@ -18,7 +8,7 @@
 import {Component,Vue} from 'vue-property-decorator'
 @Component
 export default class Index extends Vue{
-
+  
 }
 </script>
 
