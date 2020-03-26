@@ -16,7 +16,7 @@ export default class Index extends Vue{
 .container{
   width: 100%;
   flex: 1;
-  padding-top: 120px;
   overflow: auto;
+  text-align: left;
 }
 </style>

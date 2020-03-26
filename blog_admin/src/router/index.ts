@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 /* 路由懒加载 */
 const Layout = () => import('@/layout/index.vue')
 const Dashboard = () => import('@/views/dashboard/index.vue')
+const BlogList = () => import('@/views/blogList/index.vue')
 
 Vue.use(VueRouter)
 
@@ -24,6 +25,16 @@ const routes = [
           activeTab: false
         },
         component: Dashboard
+      },
+      {
+        id: 4,
+        path: '/blogList',
+        name: 'BlogList',
+        label: '博客列表',
+        meta: {
+          activeTab: false
+        },
+        component: BlogList
       },
       {
         id: 2,
