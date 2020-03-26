@@ -1,99 +1,80 @@
 <template>
   <div class="top-tip">
+    <div class="global-tool"></div>
     <div class="tag-list">
-      <el-tabs style="width:100%" v-model="getMenuActiveIndex"
-               type="card"
-               closable
-               @tab-remove="removeTab">
-        <el-tab-pane v-for="(item, index) in getTabList"
-                    :key="index"
-                    :label="item.label"
-                    :name="item.id + ''">
-        </el-tab-pane>
+      <el-tabs
+        @tab-remove="removeTab"
+        closable
+        style="width:100%"
+        type="card"
+        v-model="editableTabsValue"
+      >
+        <el-tab-pane
+          :key="item.id"
+          :label="item.label"
+          :name="item.id + ''"
+          v-for="item in getTabList"
+        ></el-tab-pane>
       </el-tabs>
     </div>
-    <el-button size="small"
-               @click="addTab(editableTabsValue)">
-      add tab
-    </el-button>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import {namespace} from 'vuex-class'
+import { Component, Vue, Watch } from 'vue-property-decorator'
+import { namespace } from 'vuex-class'
 const menus = namespace('menus')
 @Component
 export default class NavBar extends Vue {
   @menus.Getter('getTabList') getTabList
   @menus.Getter('getMenuActiveIndex') getMenuActiveIndex
   @menus.Getter('getMenuList') getMenuList
-  getCurrentMenu(index, menuList){
-    let tab = {}
-    this.getMenuList.forEach(element => {
-      if(element.id == this.getMenuActiveIndex){
-        tab = element
-        return tab
-      }
-    })
-    console.log('tabtabtabtab')
-    return tab
+  @menus.Getter('getCurrentMenu') getCurrentMenu
+  @menus.Mutation('updateTabList') updateTabList
+  @menus.Mutation('setMenuActiveIndex') setMenuActiveIndex
+  @menus.Mutation('setCurrentMenu') setCurrentMenu
+
+  editableTabsValue = ''
+
+  @Watch('$route')
+  routeChange(oldVal, newVal) {
+    /* 路由变化重置tab的active项 */
+    this.editableTabsValue = this.getMenuActiveIndex
   }
   created() {
-    console.log('-----------------------------')
-    console.log(this.getTabList,'getTabList')
-    console.log(this.getMenuActiveIndex,'getMenuActiveIndex')
-    console.log(this.getMenuList,'getMenuList')
-    const tab = this.getCurrentMenu(this.getMenuActiveIndex, this.getMenuList)
-    this.editableTabsValue = tab.name
-  }
-  editableTabs: Array<any> = [
-    {
-      title: "Tab 1",
-      name: "1",
-      content: "Tab 1 content"
-    },
-    {
-      title: "Tab 2",
-      name: "2",
-      content: "Tab 2 content"
-    },
-    {
-      title: "Tab 3",
-      name: "3",
-      content: "Tab 3 content"
-    },
-    {
-      title: "Tab 4",
-      name: "4",
-      content: "Tab 4 content"
-    }
-  ]
-  tabIndex: any = 2;
-  addTab() {
-    const newTabName = ++this.tabIndex + ''
-    this.editableTabs.push({
-      title: 'New Tab',
-      name: newTabName,
-      content: 'New Tab content'
-    });
-    this.editableTabsValue = newTabName;
+    this.editableTabsValue = this.getMenuActiveIndex
   }
   removeTab(targetName: string) {
-    const tabs = this.editableTabs
     let activeName = this.editableTabsValue
     if (activeName === targetName) {
-      tabs.forEach((tab, index) => {
-        if (tab.name === targetName) {
-          const nextTab = tabs[index + 1] || tabs[index - 1];
+      this.getTabList.forEach((tab, index) => {
+        if (tab.id == targetName) {
+          const nextTab =
+            this.getTabList[index + 1] || this.getTabList[index - 1]
           if (nextTab) {
-            activeName = nextTab.name
+            activeName = nextTab.id + ''
+            this.setMenuActiveIndex(nextTab.id)
+            this.setCurrentMenu(nextTab)
+          } else {
+            const defaultMenu = {
+              id: 999,
+              path: '/dashboard',
+              name: 'Dashboard',
+              label: '首页展示',
+              meta: {
+                activeTab: false
+              }
+            }
+            this.setMenuActiveIndex(999)
+            this.setCurrentMenu(defaultMenu)
+            this.$router.push({ path: defaultMenu.path })
           }
         }
-      });
+      })
     }
     this.editableTabsValue = activeName
-    this.editableTabs = tabs.filter(tab => tab.name !== targetName)
+    const editableTabs = this.getTabList.filter(tab => tab.id != targetName)
+    this.updateTabList(editableTabs)
   }
 }
 </script>
@@ -106,6 +87,11 @@ export default class NavBar extends Vue {
   border-bottom: 1px solid #ddd;
   text-align: left;
   padding: 0 20px;
+  .global-tool {
+    width: 100%;
+    height: 60px;
+    background: lightblue;
+  }
   .tag-list {
     width: 100%;
     height: 60px;
@@ -113,13 +99,15 @@ export default class NavBar extends Vue {
     align-items: center;
     flex-wrap: nowrap;
     overflow: hidden;
-    ::v-deep .el-tabs__header{
+    ::v-deep .el-tabs__header {
       margin-bottom: 0;
     }
-    ::v-deep .el-tabs--card>.el-tabs__header .el-tabs__item{
-      border-bottom: 1px solid #E4E7ED;
+    ::v-deep .el-tabs--card > .el-tabs__header .el-tabs__item {
+      border-bottom: 1px solid #e4e7ed;
     }
-    
+    ::v-deep .el-tabs--card > .el-tabs__header {
+      border-bottom: 1px solid transparent;
+    }
   }
 }
 </style>

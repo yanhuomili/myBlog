@@ -1,39 +1,48 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {Commit} from 'vuex'
+import { Commit } from 'vuex'
 
 Vue.use(Vuex)
 
 const state: any = {
-  menuList: [{label: 'label', value: 'value'}],
-  menuActiveIndex: 2,
-  tabList: []
+  menuList: [{ label: 'label', value: 'value' }], // 用户菜单
+  menuActiveIndex: 999, // 当前打开菜单的下标
+  tabList: [], // 当前打开过的标签
+  currentMenu: {} // 当前页面的菜单
 }
 const getters: any = {
-  getMenuList(state: any){
+  getMenuList(state: any) {
     return state.menuList
   },
-  getMenuActiveIndex(state: any){
+  getMenuActiveIndex(state: any) {
     return state.menuActiveIndex + ''
   },
-  getTabList(state: any){
+  getTabList(state: any) {
     return state.tabList
   },
-
+  getCurrentMenu(state: any) {
+    return state.currentMenu
+  }
 }
 const mutations: any = {
-  setMenuFn(state: any,menuList: Array<any>){
+  setMenuFn(state: any, menuList: Array<any>) {
     state.menuList = menuList
   },
-  setMenuActiveIndex(state: any, index: number){
+  setMenuActiveIndex(state: any, index: number) {
     state.menuActiveIndex = index
   },
-  setTabList(state: any,tabList: Array<any>){
+  setTabList(state: any, tabList: Array<any>) {
     state.tabList = state.tabList.concat(tabList)
   },
+  setCurrentMenu(state: any, currentMenu: object) {
+    state.currentMenu = currentMenu
+  },
+  updateTabList(state: any, tabList: Array<any>) {
+    state.tabList = tabList
+  }
 }
 const actions: any = {
-  updateMenuFN(context: {commit: Commit}, menuList: Array<any>){
+  updateMenuFN(context: { commit: Commit }, menuList: Array<any>) {
     context.commit('setMenuFn', menuList)
   }
 }
