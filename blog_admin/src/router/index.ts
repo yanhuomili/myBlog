@@ -5,6 +5,8 @@ import VueRouter from 'vue-router'
 const Layout = () => import('@/layout/index.vue')
 const Dashboard = () => import('@/views/dashboard/index.vue')
 const BlogList = () => import('@/views/blogList/index.vue')
+const CreateBlog = () => import('@/views/blogList/createBlog.vue')
+const EditBlog = () => import('@/views/blogList/editBlog.vue')
 
 Vue.use(VueRouter)
 
@@ -35,6 +37,27 @@ const routes = [
           activeTab: false
         },
         component: BlogList
+      },
+      {
+        id: 5,
+        path: '/createBlog',
+        name: 'CreateBlog',
+        label: '创建博客',
+        meta: {
+          activeTab: false
+        },
+        component: CreateBlog
+      },
+      {
+        id: 6,
+        path: '/editBlog',
+        name: 'EditBlog',
+        label: '编辑博客',
+        meta: {
+          activeTab: false,
+          hidden: true // 隐藏菜单
+        },
+        component: EditBlog
       },
       {
         id: 2,

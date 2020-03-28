@@ -1,9 +1,9 @@
 <template>
   <div class="layout">
-    <Aside/>
+    <Aside />
     <div class="container-wrap">
-      <NavBar/>
-      <Container/>
+      <NavBar />
+      <Container />
     </div>
   </div>
 </template>

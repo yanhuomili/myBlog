@@ -6,9 +6,10 @@ Vue.use(Vuex)
 
 const state: any = {
   menuList: [{ label: 'label', value: 'value' }], // 用户菜单
-  menuActiveIndex: 999, // 当前打开菜单的下标
+  menuActiveIndex: 4, // 当前打开菜单的下标
   tabList: [], // 当前打开过的标签
-  currentMenu: {} // 当前页面的菜单
+  currentMenu: {}, // 当前页面的菜单
+  keepAlive: false
 }
 const getters: any = {
   getMenuList(state: any) {
@@ -22,6 +23,9 @@ const getters: any = {
   },
   getCurrentMenu(state: any) {
     return state.currentMenu
+  },
+  getKeepAlive(state: any) {
+    return state.keepAlive
   }
 }
 const mutations: any = {
@@ -39,6 +43,9 @@ const mutations: any = {
   },
   updateTabList(state: any, tabList: Array<any>) {
     state.tabList = tabList
+  },
+  setKeepAlive(state: any, keepAlive: boolean) {
+    state.keepAlive = keepAlive
   }
 }
 const actions: any = {

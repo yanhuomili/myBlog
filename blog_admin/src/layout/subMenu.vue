@@ -1,22 +1,31 @@
 <template>
   <div class="sub-menu">
-    <div :key="index" v-for="(item, index) in menuList">
+    <div
+      v-for="(item, index) in menuList"
+      :key="index"
+    >
       <!-- 有子菜单 -->
-      <el-submenu :index="item.id + ''" :key="item.id" v-if="item.children">
+      <el-submenu
+        v-if="item.children"
+        :key="item.id"
+        :index="item.id + ''"
+      >
         <template slot="title">
           <i class="el-icon-location" />
           <span>{{ item.label }}</span>
         </template>
         <!-- 递归自身,递归组件必须要有name值 -->
-        <SubMenu :menuList="item.children" />
+        <SubMenu :menu-list="item.children" />
       </el-submenu>
       <!-- 没有子菜单 -->
-      <el-menu-item
-        :index="item.id + ''"
-        :key="item.id"
-        @click="changeRouterFn(item)"
+      <el-menu-item v-show="!item.meta.hidden"
         v-else
-      >{{ item.label }}</el-menu-item>
+        :key="item.id"
+        :index="item.id + ''"
+        @click="changeRouterFn(item)"
+      >
+        {{ item.label }}
+      </el-menu-item>
     </div>
   </div>
 </template>

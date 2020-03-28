@@ -1,17 +1,16 @@
 <template>
   <div class="side-bar">
     <el-menu
-          :default-active="getMenuActiveIndex"
-          class="el-menu-vertical-demo"
-          background-color="#545c64"
-          text-color="#fff"
-          active-text-color="#ffd04b"
-          @open="handleOpen"
-          @close="handleClose"
-        >
-          <SubMenu :menuList="menuList" />
-        </el-menu>
-
+      :default-active="getMenuActiveIndex"
+      class="el-menu-vertical-demo"
+      background-color="#545c64"
+      text-color="#fff"
+      active-text-color="#ffd04b"
+      @open="handleOpen"
+      @close="handleClose"
+    >
+      <SubMenu :menu-list="menuList" />
+    </el-menu>
   </div>
 </template>
 

@@ -1,20 +1,16 @@
 <template>
-  <div class="home">
-    <h2>dashborad页面</h2>
     <div class="tinymce-container">
       <tinymce-editor
-        :id="id"
+        :id="config.id"
         v-model="tinymceContent"
         :init="initOptions"
       />
     </div>
-  </div>
 </template>
 
 <script lang="ts">
 /* eslint-disable */
-// @ is an alias to /src
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import tinymce from 'tinymce/tinymce'
 import TinymceEditor from '@tinymce/tinymce-vue' // TinyMCE vue wrapper
 import { plugins, toolbar } from './config'
@@ -30,7 +26,6 @@ import 'tinymce/plugins/autosave'
 import 'tinymce/plugins/code' //代码块插件
 import 'tinymce/plugins/codesample'
 import 'tinymce/plugins/directionality'
-// import 'tinymce/plugins/emoticons' // 表情符
 import 'tinymce/plugins/fullscreen' // 全屏
 import 'tinymce/plugins/hr'
 import 'tinymce/plugins/image' //插入上传图片插件
@@ -63,36 +58,41 @@ import 'tinymce/plugins/wordcount' // 字数统计插件
   }
 })
 export default class Home extends Vue {
-  value: string = 'sdsfsdfsfs werggerh4h'
-  id: string = '11'
-  private toolbar: object = []
-  private menubar: boolean = false
-  private height: string | number = 500
-  private width: string | number = '100%'
+  @Prop({default: ''}) context // 富文本内容
+  @Prop({
+    type: Object,
+    default: () => {}
+  }) config!: object // 富文本内容
+  editor: any = null
+  
   private hasChange = false
   private hasInit = false
   private fullscreen = false      
 
   get tinymceContent() {
-    return this.value
+    return this.context
   }
   set tinymceContent(value) {
     this.$emit('input', value)
   }
   
+  getContext(){
+    return this.editor.getContent()
+  }
   mounted() {
+    console.log(this.config,'sfsdfsfsffd')
   }
   get initOptions() {
     return {
-      selector: `#${this.id}`,
-      width: this.width,
-      height: this.height,
+      selector: `#${this.config.id || 'tinymce'}`,
+      width: this.config.width || '100%',
+      height: this.config.height || 400,
       body_class: 'panel-body ',
       paste_data_images: true, // 允许粘贴图片、拖拽
       object_resizing: true, // 允许图片缩放
-      toolbar: toolbar,
-      menubar: this.menubar,
-      plugins: plugins,
+      toolbar: this.config.toolbar || toolbar,
+      menubar: false, // 隐藏顶部菜单
+      plugins: this.config.plugins || plugins,
       // language: 'zh_CN', // 需要装汉化插件
       // language_url: `/tinymce/langs/zh_CN.js`,
       skin_url: `/tinymce/ui/oxide`, // 主题
@@ -107,14 +107,13 @@ export default class Home extends Vue {
       link_title: false,
       nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
       init_instance_callback: (editor: any) => {
-        console.log(this.value, 'this.value')
-        if (this.value) {
-          editor.setContent(this.value)
+        this.editor = editor
+        if (this.context) {
+          editor.setContent(this.context)
         }
         this.hasInit = true
         editor.on('NodeChange Change KeyUp SetContent', () => {
           this.hasChange = true
-          console.log(editor.getContent(), 'editor.getContent()')
           this.$emit('input', editor.getContent())
         })
       },

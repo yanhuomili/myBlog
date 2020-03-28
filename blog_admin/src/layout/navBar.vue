@@ -1,20 +1,21 @@
 <template>
   <div class="top-tip">
-    <div class="global-tool"></div>
+    <div class="global-tool" />
     <div class="tag-list">
       <el-tabs
-        @tab-remove="removeTab"
+        v-model="editableTabsValue"
         closable
         style="width:100%"
         type="card"
-        v-model="editableTabsValue"
+        @tab-remove="removeTab"
+        @tab-click="selectTab"
       >
         <el-tab-pane
+          v-for="item in getTabList"
           :key="item.id"
           :label="item.label"
           :name="item.id + ''"
-          v-for="item in getTabList"
-        ></el-tab-pane>
+        />
       </el-tabs>
     </div>
   </div>
@@ -33,11 +34,14 @@ export default class NavBar extends Vue {
   @menus.Mutation('updateTabList') updateTabList
   @menus.Mutation('setMenuActiveIndex') setMenuActiveIndex
   @menus.Mutation('setCurrentMenu') setCurrentMenu
+  @menus.Mutation('setKeepAlive') setKeepAlive
 
   editableTabsValue = ''
+  link = ''
 
   @Watch('$route')
-  routeChange(oldVal, newVal) {
+  routeChange(newVal, oldVal) {
+    console.log(newVal,'newVal')
     /* 路由变化重置tab的active项 */
     this.editableTabsValue = this.getMenuActiveIndex
   }
@@ -45,9 +49,12 @@ export default class NavBar extends Vue {
     this.editableTabsValue = this.getMenuActiveIndex
   }
   removeTab(targetName: string) {
+    console.log(targetName, 'targetName')
+    console.log(this.editableTabsValue, 'this.editableTabsValue')
     let activeName = this.editableTabsValue
     if (activeName === targetName) {
       this.getTabList.forEach((tab, index) => {
+        console.log(tab,'tab')
         if (tab.id == targetName) {
           const nextTab =
             this.getTabList[index + 1] || this.getTabList[index - 1]
@@ -55,6 +62,8 @@ export default class NavBar extends Vue {
             activeName = nextTab.id + ''
             this.setMenuActiveIndex(nextTab.id)
             this.setCurrentMenu(nextTab)
+            this.$router.push({ path: nextTab.path })
+            this.link = nextTab.path
           } else {
             const defaultMenu = {
               id: 999,
@@ -68,6 +77,7 @@ export default class NavBar extends Vue {
             this.setMenuActiveIndex(999)
             this.setCurrentMenu(defaultMenu)
             this.$router.push({ path: defaultMenu.path })
+            this.link = defaultMenu.path
           }
         }
       })
@@ -75,6 +85,20 @@ export default class NavBar extends Vue {
     this.editableTabsValue = activeName
     const editableTabs = this.getTabList.filter(tab => tab.id != targetName)
     this.updateTabList(editableTabs)
+    this.setKeepAlive(true)
+  }
+  selectTab(tab){
+    this.setKeepAlive(true)
+    this.getTabList.forEach(item => {
+      if(tab.label ==  item.label){
+        this.link = item.path
+        item.meta.keepAlive = true
+        console.log(item, 'item')
+      }
+    })
+    this.$router.push({path: this.link})
+    console.log(tab,'tab')
+    console.log(this.$route,'this.$route')
   }
 }
 </script>
