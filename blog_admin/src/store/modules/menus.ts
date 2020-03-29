@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 const state: any = {
   menuList: [{ label: 'label', value: 'value' }], // 用户菜单
-  menuActiveIndex: 4, // 当前打开菜单的下标
+  menuActiveIndex: 999, // 当前打开菜单的下标
   tabList: [], // 当前打开过的标签
   currentMenu: {}, // 当前页面的菜单
   keepAlive: false

@@ -1,36 +1,20 @@
 <template>
   <div class="editor">
-    <el-form ref="form" :rules="rules" :model="articleModel" label-width="100px">
+    <el-form
+      ref="form"
+      :rules="rules"
+      :model="articleModel"
+      label-width="100px"
+    >
       <el-form-item label="文章类型:" prop="type">
         <el-select v-model="articleModel.type" placeholder="请选择类型">
-          <el-option
-            label="html"
-            value="html"
-          />
-          <el-option
-            label="js"
-            value="js"
-          />
-          <el-option
-            label="css"
-            value="css"
-          />
-          <el-option
-            label="es6"
-            value="es6"
-          />
-          <el-option
-            label="flutter"
-            value="flutter"
-          />
-          <el-option
-            label="taro"
-            value="taro"
-          />
-          <el-option
-            label="flutter"
-            value="flutter"
-          />
+          <el-option label="html" value="html" />
+          <el-option label="js" value="js" />
+          <el-option label="css" value="css" />
+          <el-option label="es6" value="es6" />
+          <el-option label="flutter" value="flutter" />
+          <el-option label="taro" value="taro" />
+          <el-option label="flutter" value="flutter" />
         </el-select>
       </el-form-item>
       <el-form-item label="文章标题:" prop="title">
@@ -40,13 +24,16 @@
         <el-input type="textarea" v-model="articleModel.desc"></el-input>
       </el-form-item>
       <el-form-item label="文章内容:" prop="type">
-        <tinymceEditor ref="tinymce" :config="config" :context="articleModel.context"></tinymceEditor>
+        <tinymceEditor
+          ref="tinymce"
+          :config="config"
+          :context="articleModel.context"
+        ></tinymceEditor>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">立即创建</el-button>
       </el-form-item>
     </el-form>
-    
   </div>
 </template>
 
@@ -61,7 +48,7 @@ import tinymceEditor from '@/components/tinymceEditor.vue'
   }
 })
 export default class Home extends Vue {
-  @Prop({default: true}) isEdit // 是否是编辑
+  @Prop({ default: true }) isEdit // 是否是编辑
   config = {
     width: '100%',
     height: 360
@@ -74,18 +61,19 @@ export default class Home extends Vue {
   }
 
   rules = {
-    type: [
-      { required: true, message: '请选择文章类型', trigger: 'blur' }
-    ],
-    title: [
-      { required: true, message: '请填写文章标题', trigger: 'blur' }
-    ],
+    type: [{ required: true, message: '请选择文章类型', trigger: 'blur' }],
+    title: [{ required: true, message: '请填写文章标题', trigger: 'blur' }],
     context: [
-      { type: 'string', required: true, message: '请填写文章内容', trigger: 'blur' }
-    ],
+      {
+        type: 'string',
+        required: true,
+        message: '请填写文章内容',
+        trigger: 'blur'
+      }
+    ]
   }
   created() {
-    if(this.isEdit){
+    if (this.isEdit) {
       this.articleModel = {
         type: 'html',
         title: '第一篇博客文章',
@@ -93,22 +81,21 @@ export default class Home extends Vue {
         context: '博客系统创建的初衷是。。。。。。。。。'
       }
     }
-    
   }
-  onSubmit(){
+  onSubmit() {
     this.articleModel.context = this.$refs.tinymce.getContext()
-    this.$refs.form.validate((valid) => {
+    this.$refs.form.validate(valid => {
       console.log(valid, 'valid')
       setTimeout(() => {
-        this.$router.push({path: '/blogList'})
-      }, 1000);
+        this.$router.push({ path: '/blogList' })
+      }, 1000)
     })
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .editor{
-    width: 100%;
-  }
+.editor {
+  width: 100%;
+}
 </style>

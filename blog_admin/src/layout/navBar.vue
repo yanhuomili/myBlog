@@ -24,6 +24,7 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
+import { RouterMode } from 'vue-router'
 const menus = namespace('menus')
 @Component
 export default class NavBar extends Vue {
@@ -40,8 +41,8 @@ export default class NavBar extends Vue {
   link = ''
 
   @Watch('$route')
-  routeChange(newVal, oldVal) {
-    console.log(newVal,'newVal')
+  routeChange(newVal: RouterMode) {
+    console.log(newVal, 'newVal')
     /* 路由变化重置tab的active项 */
     this.editableTabsValue = this.getMenuActiveIndex
   }
@@ -53,8 +54,8 @@ export default class NavBar extends Vue {
     console.log(this.editableTabsValue, 'this.editableTabsValue')
     let activeName = this.editableTabsValue
     if (activeName === targetName) {
-      this.getTabList.forEach((tab, index) => {
-        console.log(tab,'tab')
+      this.getTabList.forEach((tab: object, index: number) => {
+        console.log(tab, 'tab')
         if (tab.id == targetName) {
           const nextTab =
             this.getTabList[index + 1] || this.getTabList[index - 1]
@@ -87,18 +88,18 @@ export default class NavBar extends Vue {
     this.updateTabList(editableTabs)
     this.setKeepAlive(true)
   }
-  selectTab(tab){
+  selectTab(tab: object) {
     this.setKeepAlive(true)
-    this.getTabList.forEach(item => {
-      if(tab.label ==  item.label){
+    this.getTabList.forEach((item: object) => {
+      if (tab.label == item.label) {
         this.link = item.path
         item.meta.keepAlive = true
         console.log(item, 'item')
       }
     })
-    this.$router.push({path: this.link})
-    console.log(tab,'tab')
-    console.log(this.$route,'this.$route')
+    this.$router.push({ path: this.link })
+    console.log(tab, 'tab')
+    console.log(this.$route, 'this.$route')
   }
 }
 </script>

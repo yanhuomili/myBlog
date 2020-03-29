@@ -1,11 +1,11 @@
 <template>
-    <div class="tinymce-container">
-      <tinymce-editor
-        :id="config.id"
-        v-model="tinymceContent"
-        :init="initOptions"
-      />
-    </div>
+  <div class="tinymce-container">
+    <tinymce-editor
+      :id="config.id"
+      v-model="tinymceContent"
+      :init="initOptions"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -51,23 +51,23 @@ import 'tinymce/plugins/visualblocks'
 import 'tinymce/plugins/visualchars'
 import 'tinymce/plugins/wordcount' // 字数统计插件
 
-
 @Component({
   components: {
     TinymceEditor
   }
 })
 export default class Home extends Vue {
-  @Prop({default: ''}) context // 富文本内容
+  @Prop({ default: '' }) context // 富文本内容
   @Prop({
     type: Object,
     default: () => {}
-  }) config!: object // 富文本内容
+  })
+  config!: object // 富文本内容
   editor: any = null
-  
+
   private hasChange = false
   private hasInit = false
-  private fullscreen = false      
+  private fullscreen = false
 
   get tinymceContent() {
     return this.context
@@ -75,13 +75,11 @@ export default class Home extends Vue {
   set tinymceContent(value) {
     this.$emit('input', value)
   }
-  
-  getContext(){
+
+  getContext() {
     return this.editor.getContent()
   }
-  mounted() {
-    console.log(this.config,'sfsdfsfsffd')
-  }
+  mounted() {}
   get initOptions() {
     return {
       selector: `#${this.config.id || 'tinymce'}`,

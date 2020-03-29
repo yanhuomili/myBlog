@@ -70,6 +70,17 @@
         </template>
       </template>
     </el-table>
+    <div class="pagination-wrap">
+      <el-pagination
+        :current-page="getPageNo"
+        :page-sizes="pageSizes"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
+    </div>
   </div>
 </template>
 
@@ -81,27 +92,38 @@ import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 @Component({
   components: {}
 })
-export default class Home extends Vue {
-  @Prop({ default: [] }) column
-  @Prop({ default: [] }) data
-  @Emit('selectChange') selectChange(selection) {}
+export default class Tables extends Vue {
+  @Prop({ default: [] }) column: any
+  @Prop({ default: [] }) data: any
+  @Prop({ default: 1 }) pageNo: any
+  @Prop({ default: [10, 20, 30, 50] }) pageSizes: any
+  @Prop({ default: 10 }) pageSize: any
+  @Prop({ default: 0 }) total: any
+  @Emit('selectChange') selectChange(selection: any) {}
+  @Emit('sizeChange') sizeChange(size: number) {}
+  @Emit('currentChange') currentChange(page: number) {}
 
-  // todo 插件注释样式
-  // * 插件注释样式
-  // //start 代表可以删除的代码
-  a: string = 'aaaa'
-  // //end
+  get getPageNo() {
+    return this.pageNo
+  }
+
   blogModel: object = {
     keyWord: '',
     articleType: 'html',
     pageNe: 1,
     total: 50
   }
-  handleSelectionChange(selection) {
+  handleSelectionChange(selection: Array<any>) {
     this.selectChange(selection)
   }
-  clickHandler(render, row) {
+  clickHandler(render: any, row: any) {
     render.callback(row)
+  }
+  handleSizeChange(val: number) {
+    this.sizeChange(val)
+  }
+  handleCurrentChange(val: number) {
+    this.currentChange(val)
   }
 }
 </script>
@@ -109,5 +131,9 @@ export default class Home extends Vue {
 <style lang="scss" scoped>
 .table {
   width: 100%;
+  .pagination-wrap {
+    padding: 15px 0;
+    text-align: right;
+  }
 }
 </style>

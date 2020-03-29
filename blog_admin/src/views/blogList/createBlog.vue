@@ -1,6 +1,6 @@
 <template>
   <div class="create-blog">
-      <editor :isEdit="false"></editor>
+    <editor :isEdit="false"></editor>
   </div>
 </template>
 
@@ -14,12 +14,11 @@ import editor from './components/editor.vue'
     editor
   }
 })
-export default class Home extends Vue {
-}
+export default class Home extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-  .create-blog{
-    width: 100%;
-  }
+.create-blog {
+  width: 100%;
+}
 </style>

@@ -9,10 +9,10 @@
 </template>
 
 <style lang="scss">
-body{
+body {
   margin: 0;
 }
-*{
+* {
   box-sizing: border-box;
 }
 #app {

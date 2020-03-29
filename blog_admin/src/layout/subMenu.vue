@@ -1,15 +1,8 @@
 <template>
   <div class="sub-menu">
-    <div
-      v-for="(item, index) in menuList"
-      :key="index"
-    >
+    <div v-for="(item, index) in menuList" :key="index">
       <!-- 有子菜单 -->
-      <el-submenu
-        v-if="item.children"
-        :key="item.id"
-        :index="item.id + ''"
-      >
+      <el-submenu v-if="item.children" :key="item.id" :index="item.id + ''">
         <template slot="title">
           <i class="el-icon-location" />
           <span>{{ item.label }}</span>
@@ -18,7 +11,8 @@
         <SubMenu :menu-list="item.children" />
       </el-submenu>
       <!-- 没有子菜单 -->
-      <el-menu-item v-show="!item.meta.hidden"
+      <el-menu-item
+        v-show="!item.meta.hidden"
         v-else
         :key="item.id"
         :index="item.id + ''"
@@ -32,13 +26,13 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { Mutation, namespace } from 'vuex-class'
+import { namespace } from 'vuex-class'
 const menus = namespace('menus')
 @Component({
   name: 'SubMenu'
 })
 export default class SubMenu extends Vue {
-  @Prop() menuList!: Array<any>
+  @Prop() menuList!: Array<object>
   @menus.Getter('getTabList') getTabList
   @menus.Getter('getMenuActiveIndex') getMenuActiveIndex
   @menus.Getter('getMenuList') getMenuList

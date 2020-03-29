@@ -15,17 +15,17 @@
 </template>
 
 <script lang="ts">
-import {Component,Vue} from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import SubMenu from './subMenu.vue'
-import {Getter,  namespace} from 'vuex-class' 
+import { Getter, namespace } from 'vuex-class'
 const menus = namespace('menus')
 
 @Component({
-  components:{
+  components: {
     SubMenu
   }
 })
-export default class Index extends Vue{
+export default class Index extends Vue {
   @menus.Getter('getMenuList') menuList
   @menus.Getter('getMenuActiveIndex') getMenuActiveIndex
   handleOpen(key: number, val: Array<string>) {
@@ -37,15 +37,14 @@ export default class Index extends Vue{
     console.log(val, 'val')
   }
   created() {
-    console.log(this.menuList,'menuList--aside')
-   console.log(this.getMenuActiveIndex, 123456)
+    console.log(this.menuList, 'menuList--aside')
+    console.log(this.getMenuActiveIndex, 123456)
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-.side-bar{
+.side-bar {
   width: 200px;
   height: 100%;
   border-right: 1px solid #ddd;

@@ -33,20 +33,14 @@
     <Table
       :data="blogTableData"
       :column="column"
+      :pageNo="blogModel.pageNo"
+      :pageSizes="[10, 20, 30, 50]"
+      :pageSize="10"
+      :total="blogModel.total"
       @selectChange="selectChange"
+      @currentChange="currentChange"
+      @sizeChange="sizeChange"
     />
-
-    <div class="pagination-wrap">
-      <el-pagination
-        :current-page="blogModel.pageNo"
-        :page-sizes="[10, 20, 30, 50]"
-        :page-size="10"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="blogModel.total"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
-    </div>
   </div>
 </template>
 
@@ -172,7 +166,6 @@ export default class Home extends Vue {
             }
           }
         ]
-        console.log(buttons, 'let buttons =')
         return buttons
       }
     }
@@ -218,17 +211,14 @@ export default class Home extends Vue {
   onSubmit() {
     console.log(1346)
   }
-  selectChange(list) {
+  selectChange(list: Array<any>) {
     console.log(list, 'list')
   }
-  handleSelectionChange() {
-    console.log(456)
+  sizeChange(val: number) {
+    console.log(val, 'sizes change')
   }
-  handleSizeChange() {
-    console.log(111)
-  }
-  handleCurrentChange() {
-    console.log(222)
+  currentChange(val: number) {
+    console.log(val, '分页')
   }
 }
 </script>
