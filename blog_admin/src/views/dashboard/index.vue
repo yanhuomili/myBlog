@@ -2,11 +2,20 @@
   <div class="home">
     <h2>dashborad页面</h2>
     <div class="tinymce-container">
-      <tinymce-editor
-        :id="id"
-        v-model="tinymceContent"
-        :init="initOptions"
-      />
+      <tinymce-editor :id="id" v-model="tinymceContent" :init="initOptions" />
+    </div>
+    <div>
+      <div class="title">
+        title123465
+      </div>
+      <ul>
+        <li>
+          dsfdfsdfsdfsf
+        </li>
+        <li>
+          dsfdfsdfsdfsf
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -56,7 +65,6 @@ import 'tinymce/plugins/visualblocks'
 import 'tinymce/plugins/visualchars'
 import 'tinymce/plugins/wordcount' // 字数统计插件
 
-
 @Component({
   components: {
     TinymceEditor
@@ -71,7 +79,7 @@ export default class Home extends Vue {
   private width: string | number = '100%'
   private hasChange = false
   private hasInit = false
-  private fullscreen = false      
+  private fullscreen = false
 
   get tinymceContent() {
     return this.value
@@ -79,8 +87,10 @@ export default class Home extends Vue {
   set tinymceContent(value) {
     this.$emit('input', value)
   }
-  
+
   mounted() {
+    let a = 'string'
+    var b = 123
   }
   get initOptions() {
     return {

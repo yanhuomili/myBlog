@@ -28,9 +28,7 @@
               :align="item.align"
               :show-overflow-tooltip="item.tooltip"
             >
-              <template
-                slot-scope="scope"
-              >
+              <template slot-scope="scope">
                 <el-button
                   v-for="(render, i) in item.renderToolBox(scope.row)"
                   v-show="render"
@@ -77,34 +75,39 @@
 
 <script lang="ts">
 /* eslint-disable */
+
 import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 
 @Component({
   components: {}
 })
 export default class Home extends Vue {
-  @Prop({default: []}) column
-  @Prop({default: []}) data
-  @Emit('selectChange') selectChange(selection){}
-  
+  @Prop({ default: [] }) column
+  @Prop({ default: [] }) data
+  @Emit('selectChange') selectChange(selection) {}
+
+  // todo 插件注释样式
+  // * 插件注释样式
+  // //start 代表可以删除的代码
+  a: string = 'aaaa'
+  // //end
   blogModel: object = {
     keyWord: '',
     articleType: 'html',
     pageNe: 1,
     total: 50
   }
-  handleSelectionChange(selection){
+  handleSelectionChange(selection) {
     this.selectChange(selection)
   }
-  clickHandler(render, row){
+  clickHandler(render, row) {
     render.callback(row)
   }
-  
 }
 </script>
 
 <style lang="scss" scoped>
-  .table{
-    
-  }
+.table {
+  width: 100%;
+}
 </style>

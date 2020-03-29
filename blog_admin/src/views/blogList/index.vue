@@ -69,7 +69,7 @@
       :column="column"
       @selectChange="selectChange"
     />
-      
+
     <div class="pagination-wrap">
       <el-pagination
         :current-page="blogModel.pageNo"
@@ -108,72 +108,113 @@ export default class Home extends Vue {
       width: '50'
     },
     {
-      prop: "title",
-      label: "文章标题",
-      width: "",
+      prop: 'title',
+      label: '文章标题',
+      width: '',
       tooltip: 'show-overflow-tooltip'
     },
     {
-      prop: "createDate",
-      label: "创建时间",
-      width: "200",
+      prop: 'createDate',
+      label: '创建时间',
+      width: '200',
       tooltip: 'show-overflow-tooltip'
     },
     {
-      prop: "name",
-      label: "作者",
-      width: "100",
+      prop: 'name',
+      label: '作者',
+      width: '100',
       tooltip: 'show-overflow-tooltip'
     },
     {
-      prop: "status",
-      label: "状态",
-      width: "100",
+      prop: 'status',
+      label: '状态',
+      width: '100',
       tooltip: 'show-overflow-tooltip',
-      format: (row) => {
+      format: (row: any) => {
         switch (row.status) {
           case 1:
             return '已开始'
-            break;
+            break
           case 2:
             return '进行中'
-            break;
+            break
           case 3:
             return '已结束'
-            break;
+            break
           case 4:
             return '已失效'
-            break;
+            break
           default:
             return '/'
-            break;
+            break
         }
       }
     },
     {
-      prop: "",
-      label: "操作",
-      width: "300",
+      prop: '',
+      label: '操作',
+      width: '300',
       tooltip: 'show-overflow-tooltip',
       renderToolBox: (row: any) => {
-        console.log(row, 'row')
+        console.log(row,'row')
         let buttons = [
-          {text: '查看', size: 'mini', callback: (row: any) => {this.see(row)}},
-          row.status == 4 && {text: '删除', type: 'danger', size: 'mini', callback: function(res:any){console.log(res,'回调函数')}},
-          (row.status == 2 || row.status == 3) && {text: '编辑', type: 'primary', size: 'mini', callback: function(res:any){console.log(res,'回调函数')}},
-          (row.status == 2 || row.status == 3 || row.status == 4) && {text: '暂停', type: 'primary', size: 'mini', callback: function(res:any){console.log(res,'回调函数')}},
-          row.status == 1 && {text: '上架', type: 'primary', size: 'mini', callback: function(res:any){console.log(res,'回调函数')}},
-          row.status == 0 && {text: '下架', type: 'primary', size: 'mini', callback: function(res:any){console.log(res,'回调函数')}},
+          {
+            text: '查看',
+            size: 'mini',
+            callback: (row: any) => {
+              this.see(row)
+            }
+          },
+          row.status == 4 && {
+            text: '删除',
+            type: 'danger',
+            size: 'mini',
+            callback: function(res: any) {
+              console.log(res, '回调函数')
+            }
+          },
+          (row.status == 2 || row.status == 3) && {
+            text: '编辑',
+            type: 'primary',
+            size: 'mini',
+            callback: function(res: any) {
+              console.log(res, '回调函数')
+            }
+          },
+          (row.status == 2 || row.status == 3 || row.status == 4) && {
+            text: '暂停',
+            type: 'primary',
+            size: 'mini',
+            callback: function(res: any) {
+              console.log(res, '回调函数')
+            }
+          },
+          row.status == 1 && {
+            text: '上架',
+            type: 'primary',
+            size: 'mini',
+            callback: function(res: any) {
+              console.log(res, '回调函数')
+            }
+          },
+          row.status == 0 && {
+            text: '下架',
+            type: 'primary',
+            size: 'mini',
+            callback: function(res: any) {
+              console.log(res, '回调函数')
+            }
+          }
         ]
         console.log(buttons, 'let buttons =')
         return buttons
       }
     }
   ]
-  see(row: any){
-    console.log(row,'see')
+  see(row: any) {
+    console.log(row, 'see')
   }
-  clickHandler(){
+  clickHandler() {
     console.log(123465)
   }
   blogTableData: Array<any> = [
@@ -207,32 +248,31 @@ export default class Home extends Vue {
       name: '王小虎',
       status: 0
     }
-
   ]
-  onSubmit(){
+  onSubmit() {
     console.log(1346)
   }
-  selectChange(list){
+  selectChange(list) {
     console.log(list, 'list')
   }
-  handleSelectionChange(){
+  handleSelectionChange() {
     console.log(456)
   }
-  handleSizeChange(){
+  handleSizeChange() {
     console.log(111)
   }
-  handleCurrentChange(){
+  handleCurrentChange() {
     console.log(222)
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .blog-list{
-    width: 100%;
-    .pagination-wrap{
-      padding: 15px 0;
-      text-align: right;
-    }
+.blog-list {
+  width: 100%;
+  .pagination-wrap {
+    padding: 15px 0;
+    text-align: right;
   }
+}
 </style>
