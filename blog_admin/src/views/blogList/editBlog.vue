@@ -14,12 +14,11 @@ import editor from './components/editor.vue'
     editor
   }
 })
-export default class Home extends Vue {
-}
+export default class Home extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-  .edit-blog{
-    width: 100%;
-  }
+.edit-blog {
+  width: 100%;
+}
 </style>

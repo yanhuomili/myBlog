@@ -4,66 +4,32 @@
       style="margin-bottom: 15px;"
       size="mini"
       type="primary"
-      @click="$router.push({path: '/createBlog'})"
+      @click="$router.push({ path: '/createBlog' })"
     >
       创建博客
     </el-button>
-    <el-form
-      :inline="true"
-      :model="blogModel"
-      class="demo-form-inline"
-    >
+    <el-form :inline="true" :model="blogModel" class="demo-form-inline">
       <el-form-item label="关键字">
-        <el-input
-          v-model="blogModel.keyWord"
-          placeholder="关键字"
-        />
+        <el-input v-model="blogModel.keyWord" placeholder="关键字" />
       </el-form-item>
       <el-form-item label="文章类型">
-        <el-select
-          v-model="blogModel.articleType"
-          placeholder="请选择文章类型"
-        >
-          <el-option
-            label="html"
-            value="html"
-          />
-          <el-option
-            label="js"
-            value="js"
-          />
-          <el-option
-            label="css"
-            value="css"
-          />
-          <el-option
-            label="es6"
-            value="es6"
-          />
-          <el-option
-            label="flutter"
-            value="flutter"
-          />
-          <el-option
-            label="taro"
-            value="taro"
-          />
-          <el-option
-            label="flutter"
-            value="flutter"
-          />
+        <el-select v-model="blogModel.articleType" placeholder="请选择文章类型">
+          <el-option label="html" value="html" />
+          <el-option label="js" value="js" />
+          <el-option label="css" value="css" />
+          <el-option label="es6" value="es6" />
+          <el-option label="flutter" value="flutter" />
+          <el-option label="taro" value="taro" />
+          <el-option label="flutter" value="flutter" />
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button
-          type="primary"
-          @click="onSubmit"
-        >
+        <el-button type="primary" @click="onSubmit">
           查询
         </el-button>
       </el-form-item>
     </el-form>
-    <hr>
+    <hr />
     <Table
       :data="blogTableData"
       :column="column"
@@ -156,7 +122,7 @@ export default class Home extends Vue {
       width: '300',
       tooltip: 'show-overflow-tooltip',
       renderToolBox: (row: any) => {
-        console.log(row,'row')
+        console.log(row, 'row')
         let buttons = [
           {
             text: '查看',
