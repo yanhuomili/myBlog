@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import article from './article'
 
 /* 路由懒加载 */
 const Layout = () => import('@/layout/index.vue')
@@ -82,7 +83,8 @@ const routes = [
           import(/* webpackChunkName: "about" */ '../views/About.vue')
       }
     ]
-  }
+  },
+  ...article
 ]
 
 const router = new VueRouter({
